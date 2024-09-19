@@ -31,8 +31,10 @@ The component that handles user's sign in acitivity
  - after choosing a document, we display the SpreadSheet component.
 
 ##### Routing set up
+- use the fetch method and the url of the document?
 
 ##### Handle protected routes
+- if a cell is being edited by another user, this user's (edit)call to this url will fail?
 
 #### 2. State Management
 
@@ -51,6 +53,7 @@ The component that handles user's sign in acitivity
 
 
 ##### client updated
+- It seems that the SpreadSheetClient will fetch Documents 10 times per second. ???
 
 #### 4. User Interface
 
@@ -70,6 +73,7 @@ The component that handles user's sign in acitivity
 
 
 Cathy's opinions:
+- The way frontend fetch every 0.1 second is not efficient, how about using useEffect to monitor changes?
 - The code in the FormulaEvaluator file is poorly documented, so it takes me very long to understand what this file is doing.
 - The implementation in the FormulaEvaluator can be improved, for example, use switch statemetns instead of a lot of if/else.
 - Is it possible to have a component that has a name different from the file's name? (Still the FormulaEvaluator file)
