@@ -1,1 +1,1 @@
-{"columns":2,"rows":2,"cells":{"A1":{"formula":["A2","+"],"value":0,"error":"#ERR"},"A2":{"formula":[],"value":0,"error":"#EMPTY!"},"B1":{"formula":[],"value":0,"error":"#EMPTY!"},"B2":{"formula":[],"value":0,"error":"#EMPTY!"}}}
+{"columns":2,"rows":2,"cells":{"A1":{"formula":["9","+","9"],"value":18,"error":""},"A2":{"formula":["-","9","cuberoot"],"value":-2.080083823051904,"error":""},"B1":{"formula":["6"],"value":6,"error":""},"B2":{"formula":["rand"],"value":0.25755882302794,"error":""}}}
