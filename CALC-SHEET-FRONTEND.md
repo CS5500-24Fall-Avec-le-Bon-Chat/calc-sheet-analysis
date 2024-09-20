@@ -15,12 +15,18 @@ Examples:
 - Controler: "the SpreadSheetController" file
 
 #### 2. Singleton?
-There is only one "SpreadSheet" that is in charge of other components.
+The singleton design pattern ensures that a class has only one instance and provides a global point of access to that instance. This pattern is useful for managing shared resources or configurations where only one instance should exist.
 
-#### 3.Module Pattern
 Example:
 
-The component that handles user's sign in acitivity
+- There is only one "SpreadSheet" that is in charge of other components.
+
+#### 3.Module Pattern
+The module design pattern is a structural pattern that encapsulates related code into a single unit, or module, which can be reused and maintained independently. It helps in organizing code by providing a way to keep variables and functions private while exposing only the necessary parts.
+
+Example:
+
+- The component that handles user's sign in acitivity
 
 
 ### Analysis Questions for front end
@@ -31,10 +37,66 @@ The component that handles user's sign in acitivity
  - after choosing a document, we display the SpreadSheet component.
 
 ##### Routing set up
-- use the fetch method and the url of the document?
+- use the fetch method and set up a different url of the document/user/cell?
+
+for example:
+```
+ public getDocument(name: string, user: string) {
+        // put the user name in the body
+        if (name === "documents") {
+            return;  // This is not ready for production but for this assignment will do
+        }
+        const userName = user;
+        const fetchURL = `${this._baseURL}/documents/${name}`;
+        fetch(fetchURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "userName": userName })
+        })
+            .then(response => {
+                return response.json() as Promise<DocumentTransport>;
+            }).then((document: DocumentTransport) => {
+                this._updateDocument(document);
+
+            });
+
+    }
+```
+
+or 
+```
+public setEditStatus(isEditing: boolean): void {
+
+        // request edit status of the current cell
+        const body = {
+            "userName": this._userName,
+            "cell": this._document.currentCell
+        };
+        let requestEditViewURL = `${this._baseURL}/document/cell/view/${this._documentName}`;
+        if (isEditing) {
+            requestEditViewURL = `${this._baseURL}/document/cell/edit/${this._documentName}`;
+        }
+
+        fetch(requestEditViewURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => {
+                return response.json() as Promise<DocumentTransport>;
+            }).then((document: DocumentTransport) => {
+                this._updateDocument(document);
+            });
+    }
+```
 
 ##### Handle protected routes
 - if a cell is being edited by another user, this user's (edit)call to this url will fail?
+- it seems that the fetch/update call would fail at the backend??
 
 #### 2. State Management
 
@@ -59,7 +121,27 @@ The component that handles user's sign in acitivity
 
 ##### display different UI components based on user roles
 
+
+
 ##### cell ownership displayed to the users
+
+- displayed in the Status component inside the SpreadSheet component
+```
+<div>
+      <Status statusString={statusString} userName={userName}></Status>
+      <button onClick={returnToLoginPage}>Return to Login Page</button>
+      <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
+
+      {<SheetHolder cellsValues={cells}
+        onClick={onCellClick}
+        currentCell={currentCell}
+        currentlyEditing={currentlyEditing} ></SheetHolder>}
+      <KeyPad onButtonClick={onButtonClick}
+        onCommandButtonClick={onCommandButtonClick}
+        currentlyEditing={currentlyEditing}></KeyPad>
+      <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
+    </div>
+```
 
 
 ### Front end and Back end interaction
