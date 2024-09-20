@@ -108,10 +108,40 @@ public setEditStatus(isEditing: boolean): void {
 #### 3. API Interation
 
 ##### API calls made
+- fetch is used in SpreadSheetClient
+- axios is imported in LoginPageComponent but not used
 
 ##### Data from backend processed and displayed
 - DocumentHolder file seems to be called by a server, does it count?
-- SpreadSheetClient seems related to fetch request to the server for the spreadsheet, does it count?
+- SpreadSheetClient seems related to fetch request to the server for the spreadsheet, then it updated its states according to what is fetched from the backend.After the states are updated, the front end will re-render.
+
+```
+public setEditStatus(isEditing: boolean): void {
+
+        // request edit status of the current cell
+        const body = {
+            "userName": this._userName,
+            "cell": this._document.currentCell
+        };
+        let requestEditViewURL = `${this._baseURL}/document/cell/view/${this._documentName}`;
+        if (isEditing) {
+            requestEditViewURL = `${this._baseURL}/document/cell/edit/${this._documentName}`;
+        }
+
+        fetch(requestEditViewURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => {
+                return response.json() as Promise<DocumentTransport>;
+            }).then((document: DocumentTransport) => {
+                this._updateDocument(document);
+            });
+    }
+```
 
 
 ##### client updated
