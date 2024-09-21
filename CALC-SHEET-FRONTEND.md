@@ -578,3 +578,8 @@ Cathy's opinions:
 - The code in the FormulaEvaluator file is poorly documented, so it takes me very long to understand what this file is doing.
 - The implementation in the FormulaEvaluator can be improved, for example, use switch statemetns instead of a lot of if/else.
 - Is it possible to have a component that has a name different from the file's name? (Still the FormulaEvaluator file)
+
+Alyssa:
+- The format of routing set up is not clear and formal. In the future, it can be improved for better readability.
+- The variable naming is confusing. For example, cell label have different values through different files.
+- The "SpreadSheetClient" file is included in the "Engine" folder with other backend files. It will be better to be placed with other frontend files.
