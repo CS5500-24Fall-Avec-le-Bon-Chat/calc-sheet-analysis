@@ -408,6 +408,160 @@ private async _timedFetch(): Promise<Response> {
     </div>
 ```
 
+Alyssa:
+In the "SheetHolder" file, the cellsValue is defined with a label, which is the cell ownership.
+```
+// a wrapper for the sheet component that allows the sheet to be scrolled
+// the sheet is a grid of cells
+// the cells are clickable
+// the cells have a value
+// the cells have a label
+// the cells have a class name
+// the cells have a style
+// the cells have a click handler
+
+interface SheetHolderProps {
+  cellsValues: Array<Array<string>>;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  currentCell: string;
+  currentlyEditing:boolean
+}
+```
+Then this cellsValues will be wrapped and pass to the "SheetComponent" file.
+
+```
+function SheetHolder({ cellsValues, onClick, currentCell, currentlyEditing}: SheetHolderProps) {
+  return (
+    <div className="sheet-holder">
+      <SheetComponent cellsValues={cellsValues} onClick={onClick} currentCell={currentCell}  currentlyEditing={currentlyEditing}  />
+    </div>
+  );
+} // SheetHolder
+
+```
+The "SheetComponent" file use the method of "getCellEditor" to get the cell ownership and pass it to the "cell-label".
+
+Morevoer, the ownership of cell will only display when the cell id editing. If the cell is not currently editing, the 
+```
+  function getCellEditor(cell: string) {
+    // split on | return the second part
+    return cell.split("|")[1];
+  }
+  
+  ...
+
+  return (
+    <table className="table">
+      <tbody>
+        {/*add a row with column cellsValues */}
+        <tr>
+          <th></th>
+          {cellsValues[0].map((col, colIndex) => (
+            <th className="column-label" key={colIndex}>
+              {Cell.columnNumberToName(colIndex)}
+            </th>
+          ))}
+        </tr>
+        {cellsValues.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            <td className="row-label"> {Cell.rowNumberToName(rowIndex)}</td>
+            {row.map((cell, colIndex) => (
+              <td key={colIndex}>
+                <button
+                  onClick={onClick}
+                  value={cell}
+                  cell-label={Cell.columnRowToCell(colIndex, rowIndex)}
+                  data-testid={Cell.columnRowToCell(colIndex, rowIndex)}
+                  className={(getCellClass(Cell.columnRowToCell(colIndex, rowIndex)))}
+                >
+                  {getCellValue(cell)}
+                  <label className="cell-label">{getCellEditor(cell)}</label>
+                </button>
+
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+```
+In the "GlobalDefinitions" file, the attribute of contributingUsers is defined in the format of DocumentTransport.
+```
+export interface DocumentTransport {
+  columns: number;
+  rows: number;
+  cells: Map<string, CellTransport>;
+  formula: string;
+  result: string;
+  currentCell: string;
+  isEditing: boolean;
+  contributingUsers: UserEditing[];
+  errorOccurred: string;
+}
+```
+
+In the "SpreadSheetClient" file, the user who is editing the cell will be updated.
+```
+
+
+private _getEditorString(contributingUsers: UserEditing[], cellLabel: string): string {
+    for (let user of contributingUsers) {
+        if (user.cell === cellLabel) {
+            return user.user;
+        }
+    }
+    return '';
+}
+
+...
+
+private _updateDocument(document: DocumentTransport): void {
+        const formula = document.formula;
+        const result = document.result;
+        const currentCell = document.currentCell;
+        const columns = document.columns;
+        const rows = document.rows;
+        const isEditing = document.isEditing;
+        const contributingUsers = document.contributingUsers;
+        const errorOccurred = document.errorOccurred;
+
+
+        // create the document
+        this._document = {
+            formula: formula,
+            result: result,
+
+            currentCell: currentCell,
+            columns: columns,
+            rows: rows,
+            isEditing: isEditing,
+            cells: new Map<string, CellTransport>(),
+            contributingUsers: contributingUsers,
+            errorOccurred: errorOccurred
+        };
+        // create the cells
+        const cells = document.cells as unknown as CellTransportMap;
+
+        for (let cellName in cells) {
+
+            let cellTransport = cells[cellName];
+            const [column, row] = Cell.cellToColumnRow(cellName);
+            const cell: CellTransport = {
+                formula: cellTransport.formula,
+                value: cellTransport.value,
+                error: cellTransport.error,
+                editing: this._getEditorString(contributingUsers, cellName)
+            };
+            this._document!.cells.set(cellName, cell);
+        }
+        if (errorOccurred !== '') {
+            this._errorCallback(errorOccurred)
+        }
+
+    }
+```
+
 
 ### Front end and Back end interaction
 
