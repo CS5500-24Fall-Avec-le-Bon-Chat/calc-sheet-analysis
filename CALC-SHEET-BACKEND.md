@@ -36,5 +36,62 @@
 ### Interactions
 
 
+1. **Creating a Document**
+   - **Frontend Action**: User creates a new document.
+   - **Backend Endpoint**: `POST /documents/create/:name`
+   - **Request**: Sends the document name and username in the request.
+   - **Response**: Returns the created document JSON.
+
+2. **Retrieving Document Names**
+   - **Frontend Action**: User requests the list of document names.
+   - **Backend Endpoint**: `GET /documents`
+   - **Request**: No additional parameters.
+   - **Response**: Returns a list of document names.
+
+3. **Updating a Document**
+   - **Frontend Action**: User updates a document.
+   - **Backend Endpoint**: `PUT /documents/:name`
+   - **Request**: Sends the document name and username in the request.
+   - **Response**: Returns the updated document JSON.
+
+4. **Editing a Cell**
+   - **Frontend Action**: User requests to edit a specific cell in a document.
+   - **Backend Endpoint**: `PUT /document/cell/edit/:name`
+   - **Request**: Sends the document name, user name, and cell identifier in the request.
+   - **Response**: Returns the updated document JSON.
+
+5. **Viewing a Cell**
+   - **Frontend Action**: User requests to view a specific cell in a document.
+   - **Backend Endpoint**: `PUT /document/cell/view/:name`
+   - **Request**: Sends the document name, user name, and cell identifier in the request.
+   - **Response**: Returns the updated document JSON.
+
+6. **Adding a Token**
+   - **Frontend Action**: User adds a token to a document.
+   - **Backend Endpoint**: `PUT /document/addtoken/:name`
+   - **Request**: Sends the document name, username, and token in the request.
+   - **Response**: Returns the updated document JSON.
+
+7. **Adding a Cell**
+   - **Frontend Action**: User adds a new cell to a document.
+   - **Backend Endpoint**: `PUT /document/addcell/:name`
+   - **Request**: Sends the document name, user name, and cell identifier in the request.
+   - **Response**: Returns the updated document JSON.
+
+8. **Removing a Token**
+   - **Frontend Action**: User removes a token from a document.
+   - **Backend Endpoint**: `PUT /document/removetoken/:name`
+   - **Request**: Sends the document name and username in the request.
+   - **Response**: Returns the updated document JSON.
+
+9. **Clearing a Formula**
+   - **Frontend Action**: User clears a formula in a document.
+   - **Backend Endpoint**: `PUT /document/clear/formula/:name`
+   - **Request**: Sends the document name and username in the request.
+   - **Response**: Returns the updated document JSON.
+
+
+
+
 
 ### Challenges
