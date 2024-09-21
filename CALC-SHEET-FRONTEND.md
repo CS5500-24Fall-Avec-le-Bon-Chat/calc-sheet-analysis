@@ -16,20 +16,15 @@ Alyssa:
 - View: the "SheetHolder" file and "SheetComponent" file
 - Controller: the "SpreadSheet" file
 
-Examples:
+Cathy:
 - Model: the "Cell" file
 - View: the "SheetHolder" file
 - Controler: "the SpreadSheetController" file
 
-Alyssa:
-- Model: the "SpreadSheetClient" file
-- View: the "SheetHolder" file and "SheetComponent" file
-- Controller: the "SpreadSheet" file
 
 #### 2. Singleton?
+Cathy:
 The singleton design pattern ensures that a class has only one instance and provides a global point of access to that instance. This pattern is useful for managing shared resources or configurations where only one instance should exist.
-
-Example:
 
 - There is only one "SpreadSheet" that is in charge of other components.
 
@@ -53,6 +48,7 @@ Example:
 
 - The component that handles user's sign in acitivity
 
+#### 4. Observer Patter 
 Alyssa:
 - Observer or Publisher-Subscriber: useEffect and useState hooks can be considered as part of observer pattern
 For example, in the "SpreadSheet" file.
@@ -86,6 +82,8 @@ As mentioned before, in the front-end we have the "SpreadSheet" as controller, "
 
 ### Analysis Questions for front end
 #### 1. Multi-Screen Navigation
+
+Cathy:
 - In the App.js, it renders different contents depending on whether the user is logged in.
  - If the user is not logged in, the loginPageComponent just show the login part
  - otherwise, we can choose a document to open
@@ -318,10 +316,13 @@ return (
 #### 3. API Interation
 
 ##### API calls made
+
+Cathy:
 - fetch is used in SpreadSheetClient
 - axios is imported in LoginPageComponent but not used
 
 ##### Data from backend processed and displayed
+Cathy:
 - DocumentHolder file seems to be called by a server, does it count?
 - SpreadSheetClient seems related to fetch request to the server for the spreadsheet, then it updated its states according to what is fetched from the backend.After the states are updated, the front end will re-render.
 
@@ -358,6 +359,7 @@ The frontend fetchs data from the backend and uses Promise to get the response. 
 
 
 ##### client updated
+Cathy:
 - It seems that the SpreadSheetClient will fetch Documents 10 times per second. ???
 
 Alyssa:
@@ -389,8 +391,10 @@ private async _timedFetch(): Promise<Response> {
 
 
 ##### cell ownership displayed to the users
+Cathy:
 
 - displayed in the Status component inside the SpreadSheet component
+
 ```
 <div>
       <Status statusString={statusString} userName={userName}></Status>
