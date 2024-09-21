@@ -7,6 +7,7 @@
 
 
 #### 1. MVC
+
 This pattern is the most obvious one for the front end.
 
 Examples:
@@ -14,12 +15,29 @@ Examples:
 - View: the "SheetHolder" file
 - Controler: "the SpreadSheetController" file
 
+Alyssa:
+- Model: the "SpreadSheetClient" file
+- View: the "SheetHolder" file and "SheetComponent" file
+- Controller: the "SpreadSheet" file
+
 #### 2. Singleton?
 The singleton design pattern ensures that a class has only one instance and provides a global point of access to that instance. This pattern is useful for managing shared resources or configurations where only one instance should exist.
 
 Example:
 
 - There is only one "SpreadSheet" that is in charge of other components.
+
+
+Alyssa:
+https://en.wikipedia.org/wiki/Singleton_pattern
+```
+More specifically, the singleton pattern allows classes to:[2]
+
+Ensure they only have one instance
+Provide easy access to that instance
+Control their instantiation (for example, hiding the constructors of a class)
+```
+Based on the description from Wikipedia, we need to have a instance established and the property of the single instance is static. In the "SpreadSheet" file, I cannot find anything related to these two characteristic. I would prefer to recognize the "SpreadSheet" file as the controller but it does not have a singleton pattern. Could you explain more about your understanding regarding this topic?
 
 #### 3.Module Pattern
 The module design pattern is a structural pattern that encapsulates related code into a single unit, or module, which can be reused and maintained independently. It helps in organizing code by providing a way to keep variables and functions private while exposing only the necessary parts.
