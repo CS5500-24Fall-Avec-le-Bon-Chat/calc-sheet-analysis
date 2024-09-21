@@ -95,7 +95,13 @@ WebSockets are not being used in this project. Instead, polling is used to check
 
 Messages are exchanged between the client and server using HTTP requests. The client sends requests to specific endpoints on the server with certain parameters in JSON, and the server processes these requests and sends back responses in JSON as well.
 
+### User Management
 
+No user authentication is implemented in the backend. The server does not verify the identity of the user making the requests. The username is sent from the frontend in the request body, but it is not used for authentication purposes. The server assumes that the username is valid and does not perform any checks to verify the user's identity.
 
+No different user types. 
+
+No mechanism to secure sensitive user data. 
+ 
 
 ### Challenges
