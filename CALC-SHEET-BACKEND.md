@@ -97,11 +97,11 @@ Messages are exchanged between the client and server using HTTP requests. The cl
 
 ### User Management
 
-No user authentication is implemented in the backend. The server does not verify the identity of the user making the requests. The username is sent from the frontend in the request body, but it is not used for authentication purposes. The server assumes that the username is valid and does not perform any checks to verify the user's identity.
+1. No user authentication is implemented in the backend. The server does not verify the identity of the user making the requests. The username is sent from the frontend in the request body, but it is not used for authentication purposes. The server assumes that the username is valid and does not perform any checks to verify the user's identity.
 
-No different user types. 
+2. No different user types. 
 
-No mechanism to secure sensitive user data. 
+3. No mechanism to secure sensitive user data. 
 
 ### Middleware and Error Handling
 
@@ -116,3 +116,11 @@ There is no authentication or session management middleware used in the project.
 There is no data validation or error handling middleware used in the project. Data like username is manually handled in the function.
 
 ### Challenges
+
+**Good point**
+1. Modular Design: The backend is well-structured and modular, with separate classes for different functionalities.
+2. Error handling: The backend handles errors gracefully and returns appropriate error messages to the client.
+**Things to improve**
+1. Current polling the server by sending HTTP request is inefficient, it can be improved by using WebSockets for real-time communication.
+2. User management: Implement user authentication and authorization to secure the application and user data.
+3. Data validation: Implement data validation to prevent malicious input and ensure data integrity.
