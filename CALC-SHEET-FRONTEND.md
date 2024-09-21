@@ -46,12 +46,43 @@ Control their instantiation (for example, hiding the constructors of a class)
 Based on the description from Wikipedia, we need to have a instance established and the property of the single instance is static. In the "SpreadSheet" file, I cannot find anything related to these two characteristic. I would prefer to recognize the "SpreadSheet" file as the controller but it does not have a singleton pattern. Could you explain more about your understanding regarding this topic?
 
 #### 3.Module Pattern
+Cathy:
 The module design pattern is a structural pattern that encapsulates related code into a single unit, or module, which can be reused and maintained independently. It helps in organizing code by providing a way to keep variables and functions private while exposing only the necessary parts.
 
 Example:
 
 - The component that handles user's sign in acitivity
 
+Alyssa:
+- Observer or Publisher-Subscriber: useEffect and useState hooks can be considered as part of observer pattern
+For example, in the "SpreadSheet" file.
+
+```
+const [formulaString, setFormulaString] = useState(spreadSheetClient.getFormulaString())
+  const [resultString, setResultString] = useState(spreadSheetClient.getResultString())
+  const [cells, setCells] = useState(spreadSheetClient.getSheetDisplayStringsForGUI());
+  const [statusString, setStatusString] = useState(spreadSheetClient.getEditStatusString());
+  const [currentCell, setCurrentCell] = useState(spreadSheetClient.getWorkingCellLabel());
+  const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
+  const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
+  const [serverSelected, setServerSelected] = useState("localhost");
+
+...
+
+// useEffect to refetch the data every 1/20 of a second
+  useEffect(() => {
+    const interval = setInterval(() => {
+      updateDisplayValues();
+    }, 50);
+    return () => clearInterval(interval);
+  });
+
+```
+
+If these variables change, the component will re-render to reflect the updated state.
+
+- Model-View-Controller (MVC):
+As mentioned before, in the front-end we have the "SpreadSheet" as controller, "SpreadSheetClient" as model and "SheetHolder" and "SheetComponent" as view.
 
 ### Analysis Questions for front end
 #### 1. Multi-Screen Navigation
