@@ -33,8 +33,7 @@
 
 
 
-### Interactions
-
+### API Analysis
 
 1. **Creating a Document**
    - **Frontend Action**: User creates a new document.
@@ -90,6 +89,11 @@
    - **Request**: Sends the document name and username in the request.
    - **Response**: Returns the updated document JSON.
 
+### Real-Time Communication
+
+WebSockets are not being used in this project. Instead, polling is used to check for changes in the documents. The client polls the server at regular intervals to check for changes in the documents. If there are any changes, the server sends the updated document to the client.
+
+Messages are exchanged between the client and server using HTTP requests. The client sends requests to specific endpoints on the server with certain parameters in JSON, and the server processes these requests and sends back responses in JSON as well.
 
 
 
