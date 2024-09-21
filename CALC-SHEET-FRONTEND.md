@@ -55,6 +55,7 @@ Example:
  - after choosing a document, we display the SpreadSheet component.
 
 ##### Routing set up
+Cathy:
 - use the fetch method and set up a different url of the document/user/cell?
 
 for example:
@@ -111,6 +112,35 @@ public setEditStatus(isEditing: boolean): void {
             });
     }
 ```
+
+Alyssa:
+
+- The "App" file uses conditional rendering and URL manipulation to set up routing. It parses the current url. If the current url contains 'documents' or empty, it directs to the login page. Otherwise, it directs to the spreadsheet related pages.
+
+```
+  if (documentName === '') {
+    setDocumentName('documents');
+    resetURL('documents');
+  }
+  if (documentName === 'documents') {
+    return (
+      <div className="LoginPage">
+        <header className="Login-header">
+          <LoginPageComponent spreadSheetClient={spreadSheetClient} />
+        </header>
+      </div>
+    )
+  }
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <SpreadSheet documentName={documentName} spreadSheetClient={spreadSheetClient} />
+      </header>
+
+    </div>
+  );
+  ```
 
 ##### Handle protected routes
 - if a cell is being edited by another user, this user's (edit)call to this url will fail?
