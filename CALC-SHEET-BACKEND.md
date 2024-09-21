@@ -102,6 +102,17 @@ No user authentication is implemented in the backend. The server does not verify
 No different user types. 
 
 No mechanism to secure sensitive user data. 
- 
+
+### Middleware and Error Handling
+
+There are three middlewares used in the project:
+
+1. **CORS Middleware**: The cors middleware is used to enable Cross-Origin Resource Sharing.
+2. **Body Parser Middleware**: The body-parser middleware is used to parse incoming request bodies in JSON format.
+3. **Request Logging Middleware**: A custom middleware function is used to log incoming requests when the debug flag is enabled.
+
+There is no authentication or session management middleware used in the project.
+
+There is no data validation or error handling middleware used in the project. Data like username is manually handled in the function.
 
 ### Challenges
