@@ -48,7 +48,7 @@ Example:
 
 - The component that handles user's sign in acitivity
 
-#### 4. Observer Patter 
+#### 4. Observer Pattern 
 Alyssa:
 - Observer or Publisher-Subscriber: useEffect and useState hooks can be considered as part of observer pattern
 For example, in the "SpreadSheet" file.
@@ -91,63 +91,6 @@ Cathy:
 
 
 ##### Routing set up
-Cathy:
-- use the fetch method and set up a different url of the document/user/cell?
-
-for example:
-```
- public getDocument(name: string, user: string) {
-        // put the user name in the body
-        if (name === "documents") {
-            return;  // This is not ready for production but for this assignment will do
-        }
-        const userName = user;
-        const fetchURL = `${this._baseURL}/documents/${name}`;
-        fetch(fetchURL, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ "userName": userName })
-        })
-            .then(response => {
-                return response.json() as Promise<DocumentTransport>;
-            }).then((document: DocumentTransport) => {
-                this._updateDocument(document);
-
-            });
-
-    }
-```
-
-or 
-```
-public setEditStatus(isEditing: boolean): void {
-
-        // request edit status of the current cell
-        const body = {
-            "userName": this._userName,
-            "cell": this._document.currentCell
-        };
-        let requestEditViewURL = `${this._baseURL}/document/cell/view/${this._documentName}`;
-        if (isEditing) {
-            requestEditViewURL = `${this._baseURL}/document/cell/edit/${this._documentName}`;
-        }
-
-        fetch(requestEditViewURL, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        })
-            .then(response => {
-                return response.json() as Promise<DocumentTransport>;
-            }).then((document: DocumentTransport) => {
-                this._updateDocument(document);
-            });
-    }
-```
 
 Alyssa:
 
@@ -179,9 +122,7 @@ Alyssa:
   ```
 
 ##### Handle protected routes
-Cathy:
-- if a cell is being edited by another user, this user's (edit)call to this url will fail?
-- it seems that the fetch/update call would fail at the backend??
+
 
 Alyssa:
 - The "LoginPageComponent" file protects routes implicitly. It implements a form of conditional rendering based on if the user is logged in. The method of "buildFileSelector" checks if the user is empty. It only allows nonempty user to proceed further.
@@ -225,6 +166,10 @@ function buildFileSelector() {
 #### 2. State Management
 
 ##### user state maintained and shared
+
+parent-child communication (useState())
+there is no Redux or useContext in this project
+
 ##### tools used to manage global state
 
 Alyssa:
@@ -318,8 +263,63 @@ return (
 ##### API calls made
 
 Cathy:
-- fetch is used in SpreadSheetClient
+- fetch is used in SpreadSheetClient, set up a different url of the document/user/cell?
 - axios is imported in LoginPageComponent but not used
+
+for example:
+```
+ public getDocument(name: string, user: string) {
+        // put the user name in the body
+        if (name === "documents") {
+            return;  // This is not ready for production but for this assignment will do
+        }
+        const userName = user;
+        const fetchURL = `${this._baseURL}/documents/${name}`;
+        fetch(fetchURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "userName": userName })
+        })
+            .then(response => {
+                return response.json() as Promise<DocumentTransport>;
+            }).then((document: DocumentTransport) => {
+                this._updateDocument(document);
+
+            });
+
+    }
+```
+
+or 
+```
+public setEditStatus(isEditing: boolean): void {
+
+        // request edit status of the current cell
+        const body = {
+            "userName": this._userName,
+            "cell": this._document.currentCell
+        };
+        let requestEditViewURL = `${this._baseURL}/document/cell/view/${this._documentName}`;
+        if (isEditing) {
+            requestEditViewURL = `${this._baseURL}/document/cell/edit/${this._documentName}`;
+        }
+
+        fetch(requestEditViewURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => {
+                return response.json() as Promise<DocumentTransport>;
+            }).then((document: DocumentTransport) => {
+                this._updateDocument(document);
+            });
+    }
+```
 
 ##### Data from backend processed and displayed
 Cathy:
@@ -357,10 +357,11 @@ public setEditStatus(isEditing: boolean): void {
 Alyssa:
 The frontend fetchs data from the backend and uses Promise to get the response. It parses the response and translates the response into the format -"DocumentTransport". Then, it passes the processed data for further usage.
 
+Json/data->Parse->Object->something frontend use(model)->controller->view
 
 ##### client updated
 Cathy:
-- It seems that the SpreadSheetClient will fetch Documents 10 times per second. ???
+- It seems that the SpreadSheetClient will fetch Documents 10 times per second. 
 
 Alyssa:
 - The method of "_timedFetch" in the "SpreadSheetClient" file fetches data from the server every 0.1 seconds to ensure different users can see updates.
@@ -388,7 +389,8 @@ private async _timedFetch(): Promise<Response> {
 
 ##### display different UI components based on user roles
 
-
+cell ownership?
+is it being editted?
 
 ##### cell ownership displayed to the users
 Cathy:
@@ -569,10 +571,15 @@ private _updateDocument(document: DocumentTransport): void {
 
 ### Front end and Back end interaction
 
+"fetch" in SpreadsheetClient
+DocumentHolder and DocumentServer(???)
+
 #### 1. API request-response flow
+???
 
 #### 2. Real time interaction
-
+observer... useEffect(()=>{}, 100)
+getDocument... 
 
 ### Key challenges and design choices that improve the performance and scalability of the application
 
