@@ -353,9 +353,34 @@ public setEditStatus(isEditing: boolean): void {
     }
 ```
 
+Alyssa:
+The frontend fetchs data from the backend and uses Promise to get the response. It parses the response and translates the response into the format -"DocumentTransport". Then, it passes the processed data for further usage.
+
 
 ##### client updated
 - It seems that the SpreadSheetClient will fetch Documents 10 times per second. ???
+
+Alyssa:
+- The method of "_timedFetch" in the "SpreadSheetClient" file fetches data from the server every 0.1 seconds to ensure different users can see updates.
+```
+private async _timedFetch(): Promise<Response> {
+
+        // only get the document list every 2 seconds
+        let documentListInterval = 20;
+        let documentFetchCount = 0;
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this.getDocument(this._documentName, this._userName);
+                documentFetchCount++;
+                if (documentFetchCount > documentListInterval) {
+                    documentFetchCount = 0;
+                    this.getDocuments(this._userName);
+                }
+                this._timedFetch();
+            }, 100);
+        });
+    }
+```
 
 #### 4. User Interface
 
