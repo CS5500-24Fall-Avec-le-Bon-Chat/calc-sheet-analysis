@@ -181,6 +181,7 @@ Alyssa:
   ```
 
 ##### Handle protected routes
+Cathy:
 - if a cell is being edited by another user, this user's (edit)call to this url will fail?
 - it seems that the fetch/update call would fail at the backend??
 
@@ -226,9 +227,93 @@ function buildFileSelector() {
 #### 2. State Management
 
 ##### user state maintained and shared
-
-
 ##### tools used to manage global state
+
+Alyssa:
+In the "LoginPageComponent" file, useState is used for authentication status and to track whether the user name is empty.
+If the user edit its name, setUserName will update userName and pass this value to the variabel of spreadSheetClient. The method of "buildFileSelector" checks the validality of the userName and decide whether to proceed further. 
+```
+  const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
+  const [documents, setDocuments] = useState<string[]>([]);
+
+  ...
+  function getUserLogin() {
+    return <div>
+      <input
+        type="text"
+        placeholder="User name"
+        defaultValue={userName}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            // get the text from the input
+            let userName = (event.target as HTMLInputElement).value;
+            window.sessionStorage.setItem('userName', userName);
+            // set the user name
+            setUserName(userName);
+            spreadSheetClient.userName = userName;
+          }
+        }} />
+    </div>
+  }
+  ...
+  function buildFileSelector() {
+    if (userName === "") {
+      return <div>
+        <h4>Please enter a user name</h4>
+        <br />
+        You must be logged in to<br />
+        access the documents!
+      </div>;
+    }
+
+    const sheets: string[] = spreadSheetClient.getSheets();
+    // make a table with the list of sheets and a button beside each one to edit the sheet
+    return <div>
+      <table>
+        <thead>
+          <tr className="selector-title">
+            <th>Document Name---</th>
+            <th>Actions</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {sheets.map((sheet) => {
+            return <tr className="selector-item">
+              <td >{sheet}</td>
+              <td><button onClick={() => loadDocument(sheet)}>
+                Edit
+              </button></td>
+            </tr>
+          })}
+        </tbody>
+      </table>
+    </div >
+  }
+
+```
+
+In the "SpreadSheet" file, the parent component holds the state variables -"statusString", "userName" and etc. These state variables are used as props to pass down to child components, such as "Sheetholder", and "keyPad". In this project, Redux or Context API are not used for managing global state. 
+```
+return (
+    <div>
+      <Status statusString={statusString} userName={userName}></Status>
+      <button onClick={returnToLoginPage}>Return to Login Page</button>
+      <Formula formulaString={formulaString} resultString={resultString}  ></Formula>
+
+      {<SheetHolder cellsValues={cells}
+        onClick={onCellClick}
+        currentCell={currentCell}
+        currentlyEditing={currentlyEditing} ></SheetHolder>}
+      <KeyPad onButtonClick={onButtonClick}
+        onCommandButtonClick={onCommandButtonClick}
+        currentlyEditing={currentlyEditing}></KeyPad>
+      <ServerSelector serverSelector={serverSelector} serverSelected={serverSelected} />
+    </div>
+  )
+```
+
+
 
 #### 3. API Interation
 
