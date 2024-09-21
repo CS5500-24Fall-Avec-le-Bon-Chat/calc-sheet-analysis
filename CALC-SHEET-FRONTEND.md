@@ -10,6 +10,12 @@
 
 This pattern is the most obvious one for the front end.
 
+Alyssa:
+
+- Model: the "SpreadSheetClient" file
+- View: the "SheetHolder" file and "SheetComponent" file
+- Controller: the "SpreadSheet" file
+
 Examples:
 - Model: the "Cell" file
 - View: the "SheetHolder" file
@@ -53,6 +59,7 @@ Example:
  - If the user is not logged in, the loginPageComponent just show the login part
  - otherwise, we can choose a document to open
  - after choosing a document, we display the SpreadSheet component.
+
 
 ##### Routing set up
 Cathy:
@@ -146,6 +153,45 @@ Alyssa:
 - if a cell is being edited by another user, this user's (edit)call to this url will fail?
 - it seems that the fetch/update call would fail at the backend??
 
+Alyssa:
+- The "LoginPageComponent" file protects routes implicitly. It implements a form of conditional rendering based on if the user is logged in. The method of "buildFileSelector" checks if the user is empty. It only allows nonempty user to proceed further.
+
+```
+function buildFileSelector() {
+    if (userName === "") {
+      return <div>
+        <h4>Please enter a user name</h4>
+        <br />
+        You must be logged in to<br />
+        access the documents!
+      </div>;
+    }
+
+    const sheets: string[] = spreadSheetClient.getSheets();
+    // make a table with the list of sheets and a button beside each one to edit the sheet
+    return <div>
+      <table>
+        <thead>
+          <tr className="selector-title">
+            <th>Document Name---</th>
+            <th>Actions</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {sheets.map((sheet) => {
+            return <tr className="selector-item">
+              <td >{sheet}</td>
+              <td><button onClick={() => loadDocument(sheet)}>
+                Edit
+              </button></td>
+            </tr>
+          })}
+        </tbody>
+      </table>
+    </div >
+  }
+```
 #### 2. State Management
 
 ##### user state maintained and shared
