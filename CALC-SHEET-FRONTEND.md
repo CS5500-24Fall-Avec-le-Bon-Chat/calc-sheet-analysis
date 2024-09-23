@@ -17,8 +17,8 @@ Alyssa:
 - Controller: the "SpreadSheet" file
 
 Cathy:
-- Model: the "Cell" file
-- View: the "SheetHolder" file
+- Model: the "Cell" file, SheetMomory file, backend/database
+- View: the "SpreadSheet" file
 - Controler: "the SpreadSheetController" file
 
 
@@ -323,8 +323,8 @@ public setEditStatus(isEditing: boolean): void {
 
 ##### Data from backend processed and displayed
 Cathy:
-- DocumentHolder file seems to be called by a server, does it count?
-- SpreadSheetClient seems related to fetch request to the server for the spreadsheet, then it updated its states according to what is fetched from the backend.After the states are updated, the front end will re-render.
+
+- SpreadSheetClient seems related to fetch request to the server for the spreadsheet, then it updated its states according to what is fetched from the backend.After the states are updated, the front end will re-render because SpreadSheet used the states in SpreadSheetClient.
 
 ```
 public setEditStatus(isEditing: boolean): void {
@@ -575,7 +575,7 @@ private _updateDocument(document: DocumentTransport): void {
 DocumentHolder and DocumentServer(???)
 
 #### 1. API request-response flow
-???
+getters and setters in SpreadSheetClient?
 
 #### 2. Real time interaction
 observer... useEffect(()=>{}, 100)
