@@ -138,5 +138,13 @@ describe("Cell", () => {
     });
   });
 
+  describe("getError", () => {
+    it("should return the error message", () => {
+      const cell = new Cell();
+      cell.setError(ErrorMessages.invalidFormula);
+      expect(cell.getError()).toEqual(ErrorMessages.invalidFormula);
+    });
+  });
+
 });
 
