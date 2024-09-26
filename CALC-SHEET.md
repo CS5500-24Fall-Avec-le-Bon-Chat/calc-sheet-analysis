@@ -6,7 +6,7 @@
 #### 1. MVC
 
 ##### Model
-M is the model of DocumentHolder file.
+Model is the DocumentHolder file.
 
 ##### Controller
 Controller has two parts, one in frontend, and the other one in backend.
@@ -35,7 +35,8 @@ Example:
 #### 4. Observer Pattern
 
 - Observer or Publisher-Subscriber: useEffect and useState hooks can be considered as part of observer pattern
-  For example, in the "SpreadSheet" file.
+  
+For example, in the "SpreadSheet.tsx" file.
 
 ```
 const [formulaString, setFormulaString] = useState(spreadSheetClient.getFormulaString())
@@ -120,7 +121,7 @@ const [formulaString, setFormulaString] = useState(spreadSheetClient.getFormulaS
 
 Real-Time Communication is communication between frontend and backend.
 
-In this project, webSockets are not being used in this project. Instead, polling is used to check for changes in the documents. The client polls the server at regular intervals to check for changes in the documents. If there are any changes, the server sends the updated document to the client.
+In this project, webSockets are not being used. Instead, polling is used to check for changes in the documents. The client polls the server at regular intervals to check for changes in the documents. If there are any changes, the server sends the updated document to the client.
 
 Messages are exchanged between the client and server using HTTP requests. The client sends requests to specific endpoints on the server with certain parameters in JSON, and the server processes these requests and sends back responses in JSON as well.
 
@@ -144,7 +145,7 @@ There is no authentication or session management middleware used in the project.
 
 There is no data validation or error handling middleware used in the project. Data like username is manually handled in the function.
 
-## Part 3 Analysis Questions for front end
+## Part 3 Analyse the frontend. 
 
 #### 1. Multi-Screen Navigation
 
@@ -228,12 +229,13 @@ function buildFileSelector() {
 ##### user state maintained and shared
 
 parent-child communication (useState())
-there is no Redux or useContext in this project
+There is no Redux or useContext in this project
 
 ##### tools used to manage global state
 
 In the "LoginPageComponent" file, useState is used for authentication status and to track whether the user name is empty.
 If the user edit its name, setUserName will update userName and pass this value to the variabel of spreadSheetClient. The method of "buildFileSelector" checks the validality of the userName and decide whether to proceed further.
+
 ```
   const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
   const [documents, setDocuments] = useState<string[]>([]);
@@ -295,7 +297,8 @@ If the user edit its name, setUserName will update userName and pass this value 
 
 ```
 
-In the "SpreadSheet" file, the parent component holds the state variables -"statusString", "userName" and etc. These state variables are used as props to pass down to child components, such as "Sheetholder", and "keyPad". In this project, Redux or Context API are not used for managing global state.
+In the "SpreadSheet" file, the parent component holds the state variables -"statusString", "userName" , etc. These state variables are used as props to pass down to child components, such as "Sheetholder", and "keyPad". In this project, Redux or Context API are not used for managing global state.
+
 ```
 return (
     <div>
@@ -319,7 +322,7 @@ return (
 
 ##### API calls made
 
-- fetch is used in SpreadSheetClient, set up a different url of the document/user/cell?
+- fetch is used in SpreadSheetClient, to set up a different url of the document/user/cell
 - axios is imported in LoginPageComponent but not used
 
 for example:
@@ -620,8 +623,10 @@ It happens in controller(s) from frontend and backend, as SpreadSheetClient and 
 
 #### 1. API request-response flow
 As included in 2.1 and 3.1, the API request-response flow can be summarized as follows:
-Besides included in previous sections, the API request-response flow can be summarized as follows:
 - Fetch: The frontend sends a request to the backend using fetch.
+- Response: The server receives the request and with endpoints like /document/, request is handled accordingly. A json is returned to the backend controller, which is then processed by the backend model. 
+- Update: The frontend controller will update its states and display them in the view. 
+
 
 #### 2. Real time interaction
 Fetch is used in the frontend to poll the server for changes in the documents. The client fetches data from the server every 0.1 seconds to check for updates. If there are any changes, the server sends back the updated document to the client.
